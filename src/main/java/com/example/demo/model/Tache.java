@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import java.util.Date;
 
+@Getter
+@Setter
 @Entity
 @Data
 @NoArgsConstructor
@@ -16,6 +18,7 @@ public class Tache {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false)
     private String titre;
 
@@ -24,10 +27,12 @@ public class Tache {
 
     @Column(nullable = false)
     private String statut;
+
     @Temporal(TemporalType.DATE)
     private Date dateLimite;
+
+
     @ManyToOne
     @JoinColumn(name = "projet_id", nullable = false)
     private Projet projet;
-
 }

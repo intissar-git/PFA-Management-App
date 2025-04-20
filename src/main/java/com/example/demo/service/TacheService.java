@@ -14,4 +14,9 @@ public class TacheService {
     public List<Tache> getAllTaches(){
         return tacheRepository.getAllTaches();
     }
+
+    //ajouter une tache
+    public Tache AddNewTache(Tache tache){
+        return tacheRepository.save(tache);
+    }
 }
