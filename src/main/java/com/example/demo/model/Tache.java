@@ -1,4 +1,5 @@
 package com.example.demo.model;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,9 +29,10 @@ public class Tache {
     @Column(nullable = false)
     private String statut;
 
-    @Temporal(TemporalType.DATE)
-    private Date dateLimite;
 
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd") // important pour Spring + Jackson
+    private Date dateLimite;
 
     @ManyToOne
     @JoinColumn(name = "projet_id", nullable = false)
