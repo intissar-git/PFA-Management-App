@@ -30,6 +30,8 @@ public class ComptesController {
     public  SoutenanceService soutenanceService;
     @Autowired
     public TacheService tacheService;
+    @Autowired
+    public UtilisateurService utilisateurService;
 
     // Liste des departements
     @GetMapping("/departements")
@@ -119,14 +121,14 @@ public class ComptesController {
         return ResponseEntity.status(201).body(savedSoutenance);
 
     }
-    @GetMapping("Taches")
 
-    public ResponseEntity<List<Tache>> getAllTaches() {
-        List<Tache> tache = tacheService.getAllTaches();
-        if(tache.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(tache);
+    //enregestré les codes de pfe générer
+
+    @PutMapping("/utilisateur/update-codes")
+    public ResponseEntity<Void> updateUtilisateursCodes(@RequestBody List<Utilisateur> utilisateurs) {
+        utilisateurService.updateCodes(utilisateurs);
+        return ResponseEntity.ok().build();
     }
+
 
 }

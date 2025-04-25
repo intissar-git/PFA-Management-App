@@ -13,16 +13,5 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000") // Autoriser React à faire des requêtes
 public class PlaningSoutenanceController {
 
-
-    @Autowired
-    public TacheService tacheService;
-
-    @PostMapping("/AddTache")
-    public ResponseEntity<Tache> addSoutenance(@RequestBody Tache tache) {
-
-        // Sauvegarder la tache dans la base de données
-        Tache saveTache = tacheService.AddNewTache(tache);
-        // Retourner la soutenance sauvegardée avec un code HTTP 201 (Créé)
-        return ResponseEntity.status(201).body(saveTache);
-    }
 }
+

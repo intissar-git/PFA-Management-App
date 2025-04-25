@@ -19,6 +19,8 @@ public class UtilisateurService {
 
     @Autowired
     private EtudiantRepository etudiantRepository;
+    @Autowired
+    private UtilisateurRepository utilisateurRepository;
 
     // Ajouter un nouvel Encadrant
     public Encadrant saveEncadrant(Encadrant encadrant) {
@@ -58,5 +60,16 @@ public class UtilisateurService {
     // Supprimer un étudiant
     public void supprimerEtudiant(Long id) {
         etudiantRepository.deleteById(id);
+    }
+
+    //générer le code pour les encadrants et les etudiants
+
+    public void updateCodes(List<Utilisateur> utilisateur) {
+        for (Utilisateur dto :utilisateur) {
+            Utilisateur utilisateur1 = utilisateurRepository.findById(dto.getId())
+                    .orElseThrow(() -> new RuntimeException("Not found"));
+            utilisateur1.setCodePfe(dto.getCodePfe());
+            utilisateurRepository.save(utilisateur1);
+        }
     }
 }

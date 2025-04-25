@@ -9,7 +9,13 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED) // Spécifie que l'héritage utilise la stratégie JOINED
-
+@Getter
+@Setter
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Encadrant.class, name = "encadrant"),
+        @JsonSubTypes.Type(value = Etudiant.class, name = "etudiant")
+})
 
 public abstract class Utilisateur {
 
@@ -23,9 +29,8 @@ public abstract class Utilisateur {
     @Column(name = "prenom",nullable = false)
     private String prenom;
 
-    @Column(name = "mot_de_passe", nullable = false)
-    private String motDePasse;
-
+    @Column(name = "CodePFE", nullable = false)
+    private String codePfe;
 
 
 }

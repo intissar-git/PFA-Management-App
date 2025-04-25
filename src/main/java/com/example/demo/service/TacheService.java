@@ -19,4 +19,15 @@ public class TacheService {
     public Tache AddNewTache(Tache tache){
         return tacheRepository.save(tache);
     }
+
+    //supprimer par id
+        public boolean deleteTacheById(int id) {
+            if (tacheRepository.existsById(id)) {
+                tacheRepository.deleteById(id);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
 }
