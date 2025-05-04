@@ -19,10 +19,10 @@ public class GroupeController {
     public GroupeService groupeService;
 
     //recuperer tout les groupes
-    @GetMapping
+   /* @GetMapping
     public List<Groupe> getAllGroupes(){
         return groupeService.getAllGroupe();
-    }
+    }*/
 
     //ajouter un groupe
     @PostMapping

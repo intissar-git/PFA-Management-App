@@ -5,17 +5,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 @Repository
 
 public interface GroupeRepository extends JpaRepository<Groupe, Long> {
 
         // Récupérer tous les Groupes
 
-             default List<Groupe> getAllGroupes() {
+           /*  default List<Groupe> getAllGroupes() {
             return findAll();
-        }
+        }*/
 
-        // Sauvegarder un Groupe
+           Optional<Groupe> findByIntitule(String nom);
 
              default Groupe saveGroupe(Groupe groupe) {
             return save(groupe);
@@ -35,5 +36,6 @@ public interface GroupeRepository extends JpaRepository<Groupe, Long> {
                 String findEncadrantByGroupeId(@Param("idGroupe") int idGroupe);
 
 
-    }
+    //List<Groupe> getAllGroupes();
+}
 

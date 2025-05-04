@@ -14,9 +14,9 @@ public class GroupeService {
     public GroupeRepository groupeRepository;
 
     //recupere tout les groupes
-    public List<Groupe> getAllGroupe(){
+    /*public List<Groupe> getAllGroupe(){
         return groupeRepository.getAllGroupes();
-    }
+    }*/
 
     //ajouter un groupe
     public Groupe AddGroupe(Groupe groupe){

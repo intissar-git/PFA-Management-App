@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Groupe {

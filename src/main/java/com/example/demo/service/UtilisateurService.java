@@ -6,13 +6,19 @@ import com.example.demo.model.Encadrant;
 import com.example.demo.repository.EncadrantRepository;
 import com.example.demo.repository.EtudiantRepository;
 import com.example.demo.repository.UtilisateurRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 @Service
-public class UtilisateurService {
+public class UtilisateurService implements UserDetailsService  {
 
     @Autowired
     private EncadrantRepository encadrantRepository;
@@ -32,14 +38,9 @@ public class UtilisateurService {
         return etudiantRepository.save(etudiant);
     }
 
-    // Récupérer un encadrant par son adresse email
-    public Encadrant getEncadrantByEmail(String email) {
-        return encadrantRepository.findByAdresseEmail(email);
-    }
-
-    // Récupérer un étudiant par son adresse email
-    public Etudiant getEtudiantByApogee(int apogee) {
-        return etudiantRepository.findByCodeApogee(apogee);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return utilisateurRepository.findByAdresseEmail(username).orElseThrow();
     }
 
     // Mettre à jour un encadrant
@@ -64,12 +65,21 @@ public class UtilisateurService {
 
     //générer le code pour les encadrants et les etudiants
 
+
+    @Transactional
     public void updateCodes(List<Utilisateur> utilisateur) {
+        utilisateur.forEach(dto -> {
+            utilisateurRepository.updateCodePfe(dto.getId(), dto.getPassword());
+        });
+    }
+    /*public void updateCodes(List<Utilisateur> utilisateur) {
         for (Utilisateur dto :utilisateur) {
             Utilisateur utilisateur1 = utilisateurRepository.findById(dto.getId())
                     .orElseThrow(() -> new RuntimeException("Not found"));
             utilisateur1.setCodePfe(dto.getCodePfe());
             utilisateurRepository.save(utilisateur1);
         }
-    }
+    }*/
+
+
 }

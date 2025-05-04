@@ -7,15 +7,16 @@ import jakarta.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Inheritance(strategy = InheritanceType.JOINED)  // Stratégie JOINED
 public class Etudiant extends Utilisateur {
 
-    @Column(name = "apogee", nullable = false,unique = true)
-    private int codeApogee;
+
 
     @ManyToOne
-    @JoinColumn(name = "groupe_id", nullable = false)
+    @JoinColumn(name = "groupe_id", nullable =true)
     private Groupe groupe;
 
     @ManyToOne

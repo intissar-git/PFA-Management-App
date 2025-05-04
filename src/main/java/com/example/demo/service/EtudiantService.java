@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Encadrant;
 import com.example.demo.model.Etudiant;
 import com.example.demo.repository.EtudiantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EtudiantService {
@@ -15,9 +17,8 @@ public class EtudiantService {
 
 
     //la rechercher par code apogee
-    public Etudiant getEtudiantByCodeApogee(int codeApogee) {
-        return etudiantRepository.findByCodeApogee(codeApogee);
-    }
+
+
     //l'ajoute d'un etudiant
     public Etudiant saveEtudiant(Etudiant etudiant) {
         return etudiantRepository.save(etudiant);

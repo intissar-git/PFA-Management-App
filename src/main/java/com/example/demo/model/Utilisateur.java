@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -17,7 +23,7 @@ import jakarta.persistence.*;
         @JsonSubTypes.Type(value = Etudiant.class, name = "etudiant")
 })
 
-public abstract class Utilisateur {
+public class Utilisateur implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +34,47 @@ public abstract class Utilisateur {
 
     @Column(name = "prenom",nullable = false)
     private String prenom;
+    @Column(name = "adresse_email", unique = true, nullable = false)
+    private String adresseEmail;
+    @Setter
+    @Column(name = "password", nullable = false)
+    private String password;
+    private String role;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
+    }
 
-    @Column(name = "CodePFE", nullable = false)
-    private String codePfe;
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return  adresseEmail;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 
 
 }
