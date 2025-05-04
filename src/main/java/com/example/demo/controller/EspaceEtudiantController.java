@@ -1,13 +1,17 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Fichier;
 import com.example.demo.model.Livrable;
 import com.example.demo.model.Tache;
+import com.example.demo.repository.LivrablesRepository;
 import com.example.demo.repository.TacheRepository;
+import com.example.demo.service.FichierService;
 import com.example.demo.service.LivrablesServices;
 import com.example.demo.service.TacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,12 +25,19 @@ public class EspaceEtudiantController {
     public TacheRepository tacheRepository;
     public LivrablesServices livrablesServices;
 
+    @Autowired
+    public  FichierService fichierService;
+
+    public EspaceEtudiantController(FichierService fichierService) {
+        this.fichierService = fichierService;
+    }
+
 
     @Autowired
     public EspaceEtudiantController(LivrablesServices livrablesServices) {
         this.livrablesServices = livrablesServices;
     }
-
+    public LivrablesRepository livrablesRepository;
     //Ajouter une tache
     @PostMapping("/AddTache")
     public ResponseEntity<Tache> addSoutenance(@RequestBody Tache tache) {
@@ -83,6 +94,37 @@ public class EspaceEtudiantController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(liv);
+    }
+
+
+    @PostMapping("/livrables")
+    public ResponseEntity<?> ajouterLivrable(
+            @RequestParam("nom") String nom,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam("fichier") MultipartFile fichierUpload) {
+
+        // 1. Enregistrer le fichier
+        Fichier fichier = fichierService.enregistrerFichier(fichierUpload);
+
+        // 2. Créer et remplir le Livrable
+        Livrable livrable = new Livrable();
+        livrable.setNom_Fichier(nom);
+        livrable.setDescreption(description);
+        livrable.setFichier(fichier); //  il faut lier ici le fichier au livrable
+
+        // 3. Sauvegarder dans la base
+        livrablesRepository.save(livrable);
+
+        return ResponseEntity.ok("Livrable ajouté avec succès !");
+    }
+
+
+
+
+    @PostMapping("/fichiers")
+    public ResponseEntity<Fichier> uploadFichier(@RequestParam("fichier") MultipartFile fichier) {
+        Fichier savedFile = fichierService.enregistrerFichier(fichier);
+        return ResponseEntity.ok(savedFile);
     }
 
 }

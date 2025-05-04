@@ -26,17 +26,15 @@ public class Livrable {
     private String Descreption;
 
 
-    @Column(nullable = false, updatable = false)
-    private LocalDate dateSoumission;
-
-    @PrePersist
-    protected void onCreate() {
-        this.dateSoumission = LocalDate.now();
-    }
-
 
     @ManyToOne
     @JoinColumn(name = "tache_id", nullable = false)
     private Tache tache;
+
+    @ManyToOne
+    @JoinColumn(name = "fichier_id")
+    private Fichier fichier;
+
+
 
 }

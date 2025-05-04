@@ -17,6 +17,7 @@ public class DepotRapport {
     @JoinColumn(name = "filiere_id", nullable = false)
     private Filiere filiere;
 
+   
     @Column(nullable = false)
     private String description;
 

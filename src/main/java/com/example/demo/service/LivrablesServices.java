@@ -12,6 +12,10 @@ public class LivrablesServices {
 
     @Autowired
     public LivrablesRepository livrablesRepository;
+    @Autowired
+    public LivrablesServices(LivrablesRepository livrablesRepository) {
+        this.livrablesRepository = livrablesRepository;
+    }
 
     //recuperer tout les livrables
     public  List<Livrable> getAllLivrables(){
