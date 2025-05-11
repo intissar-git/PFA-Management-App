@@ -58,8 +58,8 @@ public class ComptesController {
 
     // Liste des Encadrants
     @GetMapping("/Encadrants/{id}")
-    public ResponseEntity<List<Encadrant>> getEncadrantsByDepartementId(@PathVariable int id) {
-        List<Encadrant> encadrants = encadrantService.getAllEncadrantsByDepartementId(id);
+    public ResponseEntity<List<Encadrant>> getEncadrantsByDepartementId(@PathVariable Long id) {
+        List<Encadrant> encadrants = encadrantService.getAllEncadrantsByFiliereId(id);
         if (encadrants.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

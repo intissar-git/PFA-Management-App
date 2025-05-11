@@ -16,9 +16,10 @@ public class Encadrant extends Utilisateur {
 
     @Column(name = "specialite", nullable = false)
     private String specialite;
+
     @ManyToOne
-    @JoinColumn(name = "departement_id", nullable = false)
-    private Departement departement;
+    @JoinColumn(name = "filiere_id", nullable = false)
+    private Filiere filiere;
 
 
 

@@ -6,6 +6,7 @@ import com.example.demo.service.UsersManagementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,8 +33,13 @@ public class UtilisateurManagementController {
         try {
             ReqRes response = usersManagementService.register(reg);
             return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Registration failed for email: {}", reg.getAdresseEmail(), e);
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("email existe déjà")) {
+                ReqRes errorResponse = new ReqRes();
+                errorResponse.setStatusCode(409);
+                errorResponse.setError("Un compte avec cette adresse e-mail existe déjà.");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+            }
 
             // Return a structured error response
             ReqRes errorResponse = new ReqRes();

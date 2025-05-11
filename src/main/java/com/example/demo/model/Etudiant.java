@@ -22,6 +22,7 @@ public class Etudiant extends Utilisateur {
     @ManyToOne
     @JoinColumn(name = "filiere_id", nullable = false)
     private Filiere filiere;
-
+    @Column(name = "Code_APOGEE",nullable = false)
+    private String  code_APOGEE;
 
 }

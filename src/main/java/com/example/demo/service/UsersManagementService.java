@@ -57,18 +57,21 @@ public class UsersManagementService {
 
             switch (role) {
                 case "ENCADRANT":
-                    if (registrationRequest.getDepartementId() == null || registrationRequest.getSpecialite() == null || registrationRequest.getSpecialite().isBlank()) {
-                        throw new IllegalArgumentException("L'ID du département et la spécialité sont requis pour un encadrant.");
+                    if (registrationRequest.getFiliereId() == null || registrationRequest.getSpecialite() == null || registrationRequest.getSpecialite().isBlank()) {
+                        throw new IllegalArgumentException("L'ID de la filière et la spécialité sont requis pour un encadrant.");
                     }
+                    if (utilisateurRepository.existsByAdresseEmail(registrationRequest.getAdresseEmail())) {
+                        throw new RuntimeException("Un utilisateur avec cet email existe déjà.");
+                    }
+
                     Encadrant encadrant = new Encadrant();
                     setCommonUserFields(encadrant, registrationRequest); // Définir les champs communs
                     encadrant.setSpecialite(registrationRequest.getSpecialite());
 
                     // Récupérer et associer le département
-                    Departement departement = departementRepository.findById(registrationRequest.getDepartementId())
-                            .orElseThrow(() -> new EntityNotFoundException("Département non trouvé avec l'ID : " + registrationRequest.getDepartementId()));
-                    encadrant.setDepartement(departement);
-
+                    Filiere filiere = filiereRepository.findById(registrationRequest.getFiliereId())
+                            .orElseThrow(() -> new EntityNotFoundException("Filière non trouvée avec l'ID : " + registrationRequest.getFiliereId()));
+                    encadrant.setFiliere(filiere);
                     utilisateur = encadrant; // Assigner à la variable de type base
                     break;
 
@@ -80,10 +83,10 @@ public class UsersManagementService {
                     setCommonUserFields(etudiant, registrationRequest); // Définir les champs communs
 
                     // Récupérer et associer la filière
-                    Filiere filiere = filiereRepository.findById(registrationRequest.getFiliereId())
+                    Filiere filier = filiereRepository.findById(registrationRequest.getFiliereId())
                             .orElseThrow(() -> new EntityNotFoundException("Filière non trouvée avec l'ID : " + registrationRequest.getFiliereId()));
-                    etudiant.setFiliere(filiere);
-
+                    etudiant.setFiliere(filier);
+                    etudiant.setCode_APOGEE(registrationRequest.getCode_APOGEE());
                     // Le groupe n'est PAS défini ici. Il sera null car nullable=true dans l'entité.
                     // Il devra être assigné plus tard par un autre processus/endpoint.
 
@@ -330,10 +333,10 @@ public class UsersManagementService {
                 if (updateRequest.getSpecialite() != null) {
                     encadrant.setSpecialite(updateRequest.getSpecialite());
                 }
-                if (updateRequest.getDepartementId() != null) {
-                    Departement departement = departementRepository.findById(updateRequest.getDepartementId())
-                            .orElseThrow(() -> new EntityNotFoundException("Département non trouvé pour mise à jour : " + updateRequest.getDepartementId()));
-                    encadrant.setDepartement(departement);
+                if (updateRequest.getFiliereId() != null) {
+                    Filiere filiere = filiereRepository.findById(updateRequest.getFiliereId())
+                            .orElseThrow(() -> new EntityNotFoundException("Filière non trouvée pour mise à jour : " + updateRequest.getFiliereId()));
+                    encadrant.setFiliere(filiere);
                 }
             } else if (existing instanceof Etudiant) {
                 Etudiant etudiant = (Etudiant) existing;

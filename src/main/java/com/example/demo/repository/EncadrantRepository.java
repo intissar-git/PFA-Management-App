@@ -19,8 +19,8 @@ public interface EncadrantRepository extends JpaRepository<Encadrant, Long> {
 
     // Sauvegarder un encadrant
     default Encadrant saveEncadrant(Encadrant encadrant) {
+
         return save(encadrant);
     }
     //recuperer les encadrant d'un departement
-     List<Encadrant> getAllEncadrantsByDepartementId(int dep_Id);
-}
+    List<Encadrant> getAllEncadrantsByFiliereId(Long filiereId);}

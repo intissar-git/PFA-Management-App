@@ -26,8 +26,8 @@ public class EncadrantService {
     }
 
     //recuperer tout les encadrant qui appartient a un departement
-    public List<Encadrant> getAllEncadrantsByDepartementId(int departementId){
-        return encadrantRepository.getAllEncadrantsByDepartementId(departementId);
+    public List<Encadrant> getAllEncadrantsByFiliereId(Long filiereId){
+        return encadrantRepository.getAllEncadrantsByFiliereId(filiereId);
     }
 
 

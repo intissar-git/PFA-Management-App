@@ -25,11 +25,14 @@ public class ReqRes {
     private String prenom;
 
     // Nouveaux champs pour l'héritage
-    private String specialite;
-    private Long departementId;
-    private Long filiereId;
-    private Long groupeId;
 
+    //etudiant
+
+    private String code_APOGEE;
+    private Long groupeId;
+    //encadrant
+    private String specialite;
+    private Long filiereId;
     private Utilisateur utilisateur;
     private List<Utilisateur> utilisateurList;
 }
