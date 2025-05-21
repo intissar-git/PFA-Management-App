@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import lombok.*;
+import lombok.Data;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,7 +19,7 @@ public class Encadrant extends Utilisateur {
     private String specialite;
 
     @ManyToOne
-    @JoinColumn(name = "filiere_id", nullable = false)
+    @JoinColumn(name = "filiere_id", referencedColumnName = "id")
     private Filiere filiere;
 
 

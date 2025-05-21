@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.*;
+import com.example.demo.repository.EtudiantRepository;
 import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -24,6 +26,7 @@ public class ComptesController {
 
     @Autowired
     private EtudiantService etudiantService;
+    private EtudiantRepository etudiantRepository;
 
     @Autowired
     private GroupeService groupeService;
@@ -58,7 +61,7 @@ public class ComptesController {
 
     // Liste des Encadrants
     @GetMapping("/Encadrants/{id}")
-    public ResponseEntity<List<Encadrant>> getEncadrantsByDepartementId(@PathVariable Long id) {
+    public ResponseEntity<List<Encadrant>> getEncadrantsByDepartementId(@PathVariable int id) {
         List<Encadrant> encadrants = encadrantService.getAllEncadrantsByFiliereId(id);
         if (encadrants.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -127,5 +130,15 @@ public class ComptesController {
     public ResponseEntity<Void> updateUtilisateursCodes(@RequestBody List<Utilisateur> utilisateurs) {
         utilisateurService.updateCodes(utilisateurs);
         return ResponseEntity.ok().build();
+    }
+    //get info user by id
+    @GetMapping("/UserById/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+        Optional<Utilisateur> utilisateur = utilisateurService.findById(id);
+        if (utilisateur.isPresent()) {
+            return ResponseEntity.ok(utilisateur.get());
+        } else {
+            return ResponseEntity.status(404).body("utilisateur non trouvé");
+        }
     }
 }

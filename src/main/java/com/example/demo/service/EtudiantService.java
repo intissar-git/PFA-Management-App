@@ -15,10 +15,6 @@ public class EtudiantService {
     @Autowired
     private EtudiantRepository etudiantRepository;
 
-
-    //la rechercher par code apogee
-
-
     //l'ajoute d'un etudiant
     public Etudiant saveEtudiant(Etudiant etudiant) {
         return etudiantRepository.save(etudiant);
@@ -27,8 +23,12 @@ public class EtudiantService {
     public List<Etudiant> getAllEtudiantsByFiliere(int filiere_id){
         return etudiantRepository.getAllEtudiantsByFiliereId(filiere_id);
     }
+    //
+    public Optional<Etudiant> findById(Long id) {
+        return etudiantRepository.findById(id);
+    }
 
-        }
+}
 
 
 

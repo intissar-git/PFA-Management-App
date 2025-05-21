@@ -23,6 +23,7 @@ public class ReqRes {
     private String adresseEmail;
     private String nom;
     private String prenom;
+    private Long id;
 
     // Nouveaux champs pour l'héritage
 

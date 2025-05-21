@@ -81,5 +81,9 @@ public class UtilisateurService implements UserDetailsService  {
         }
     }*/
 
+    public Optional<Utilisateur> findById(Long id) {
+        return utilisateurRepository.findById(id);
+    }
+
 
 }

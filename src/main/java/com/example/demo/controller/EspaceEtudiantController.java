@@ -1,14 +1,17 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Livrable;
-import com.example.demo.model.Tache;
+import com.example.demo.model.*;
+import com.example.demo.repository.EtudiantRepository;
 import com.example.demo.repository.TacheRepository;
+import com.example.demo.repository.UtilisateurRepository;
+import com.example.demo.service.EtudiantService;
 import com.example.demo.service.LivrablesServices;
 import com.example.demo.service.TacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -20,11 +23,15 @@ public class EspaceEtudiantController {
     public TacheService tacheService;
     public TacheRepository tacheRepository;
     public LivrablesServices livrablesServices;
-
-
+    public UtilisateurRepository utilisateurRepository;
+    private final EtudiantService etudiantService;
     @Autowired
-    public EspaceEtudiantController(LivrablesServices livrablesServices) {
+    public EspaceEtudiantController(
+            LivrablesServices livrablesServices ,
+            EtudiantService etudiantService
+    ){
         this.livrablesServices = livrablesServices;
+        this.etudiantService=etudiantService;
     }
 
     //Ajouter une tache
@@ -84,5 +91,39 @@ public class EspaceEtudiantController {
         }
         return ResponseEntity.ok(liv);
     }
+
+    //récuperer id du projet d'un etudiant
+    @GetMapping("/etudiant/{id}/projet")
+    public ResponseEntity<?> getProjetIdByEtudiant(@PathVariable Long id) {
+        Etudiant etudiant = etudiantService.findById(id).orElse(null);
+
+        if (etudiant == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Groupe groupe = etudiant.getGroupe();
+        if (groupe == null || groupe.getProjet() == null) {
+            return ResponseEntity.badRequest().body("Groupe ou projet manquant");
+        }
+
+        Projet projet = groupe.getProjet();
+        return ResponseEntity.ok(Collections.singletonMap("projet_id", projet.getId()));
+    }
+    //récuperer les taches d'un user
+    @GetMapping("/taches/{etudiantId}")
+    public ResponseEntity<List<Tache>> getTachesByEtudiant(@PathVariable Long etudiantId) {
+        List<Tache> taches = tacheService.getTachesByEtudiantId(etudiantId);
+        if (taches.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(taches);
+    }
+    //récupere les statistiques des taches d'un project
+
+    @GetMapping("/stats/{idProject}")
+    public ResponseEntity<?> getStats(@PathVariable int idProject) {
+        return ResponseEntity.ok(tacheService.getStatsUtilisateur(idProject));
+    }
+
 
 }

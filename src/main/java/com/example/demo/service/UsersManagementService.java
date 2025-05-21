@@ -181,6 +181,7 @@ public class UsersManagementService {
             response.setRefreshToken(refreshToken);
             response.setExpirationTime("24H"); // Indiquer la durée de validité
             response.setRole(utilisateur.getRole()); // Renvoyer le rôle de l'utilisateur
+            response.setId(utilisateur.getId());
             response.setMessage("Authentification réussie");
 
         } catch (UsernameNotFoundException e) {

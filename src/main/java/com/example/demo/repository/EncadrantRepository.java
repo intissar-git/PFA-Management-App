@@ -23,4 +23,4 @@ public interface EncadrantRepository extends JpaRepository<Encadrant, Long> {
         return save(encadrant);
     }
     //recuperer les encadrant d'un departement
-    List<Encadrant> getAllEncadrantsByFiliereId(Long filiereId);}
+    List<Encadrant> getAllEncadrantsByFiliereId(int filiereId);}
