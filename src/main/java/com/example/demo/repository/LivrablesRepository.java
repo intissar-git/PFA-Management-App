@@ -8,10 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface LivrablesRepository extends JpaRepository<Livrable, Integer> {
+
     // Récupérer tout les taches
     default List<Livrable> getAllLivrable() {
         return findAll();
     }
+
     List<Livrable> findByTacheId(int TacheId);
 
 }

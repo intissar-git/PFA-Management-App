@@ -18,7 +18,7 @@ public class LivrablesServices {
         return livrablesRepository.getAllLivrable();
     }
 
-    //avec id yache
+    //avec id Tache
     public List<Livrable> getLivrableByid_Tache(int id_Tache){
         return livrablesRepository.findByTacheId(id_Tache);
     }

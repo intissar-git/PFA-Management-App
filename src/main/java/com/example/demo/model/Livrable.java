@@ -1,10 +1,12 @@
 package com.example.demo.model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-
+import lombok.Builder;
+@Builder
 @Getter
 @Setter
 @Entity
@@ -20,23 +22,18 @@ public class Livrable {
     private Integer id;
 
     @Column(nullable = false)
-    private String Nom_Fichier;
+    private String nom_fichier;
 
     @Column(nullable = false)
-    private String Descreption;
-
-
-    @Column(nullable = false, updatable = false)
-    private LocalDate dateSoumission;
-
-    @PrePersist
-    protected void onCreate() {
-        this.dateSoumission = LocalDate.now();
-    }
-
+    private String descreption;
 
     @ManyToOne
     @JoinColumn(name = "tache_id", nullable = false)
     private Tache tache;
+
+    @OneToOne(mappedBy = "livrable", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private Fichier fichier;
+
 
 }
