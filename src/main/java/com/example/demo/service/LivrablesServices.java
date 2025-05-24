@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LivrablesServices {
@@ -26,5 +27,10 @@ public class LivrablesServices {
     //Ajouter une livrable
     public Livrable AjouterUneLivrable(Livrable livrable){
         return livrablesRepository.save(livrable);
+    }
+
+    //reécuperer les info d'une livrable par son id
+    public Optional<Livrable>  getLivrableById(int id_livrable){
+        return livrablesRepository.findById(id_livrable);
     }
 }

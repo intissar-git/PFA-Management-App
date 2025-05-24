@@ -9,12 +9,19 @@ import com.example.demo.service.EtudiantService;
 import com.example.demo.service.FichierService;
 import com.example.demo.service.LivrablesServices;
 import com.example.demo.service.TacheService;
+import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -121,6 +128,52 @@ public class EspaceEtudiantController {
         }
         return ResponseEntity.ok(livrables);
     }
+    //livrable par son id
+    @GetMapping("/livrable/{livrableId}")
+    public ResponseEntity<Livrable> getLivrableById(@PathVariable int livrableId) {
+        return livrablesServices.getLivrableById(livrableId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    //supprimer une livrable by id
+    @DeleteMapping("/DeleteLivrable/{id}")
+    public ResponseEntity<String> supprimerLivrable(@PathVariable Integer id) {
+        // 1. Vérifier si le livrable existe
+        Optional<Livrable> livrableOptional = livrablesRepository.findById(id);
+
+        if (livrableOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livrable non trouvé");
+        }
+
+        Livrable livrable = livrableOptional.get();
+
+        try {
+            // 2. Supprimer le fichier associé
+            fichierService.supprimerFichierParLivrable(livrable);
+
+            // 3. Supprimer le livrable
+            livrablesRepository.deleteById(id);
+
+            return ResponseEntity.ok("Livrable et fichier supprimés avec succès.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la suppression : " + e.getMessage());
+        }
+    }
+//afficher un livrable et lire le fichier avec les forma pdf et img
+@GetMapping("/fichiers/livrable/{id}") //id de livrable
+public ResponseEntity<Resource> getFichierByDeliverableId(@PathVariable Integer id) throws MalformedURLException {
+    Fichier fichier = fichierService.getFichierByDeliverableId(id);
+    Path filePath = Paths.get(fichier.getChemin());
+    Resource resource = new UrlResource(filePath.toUri());
+
+    return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fichier.getNom() + "\"")
+            .contentType(org.springframework.http.MediaType.parseMediaType(fichier.getType()))
+            .body(resource);
+}
+
+
     @GetMapping("/Livrable")
     public ResponseEntity<List<Livrable>> getAllLivrablesE() {
         List<Livrable> liv = livrablesServices.getAllLivrables();

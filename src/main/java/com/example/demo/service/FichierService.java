@@ -46,4 +46,19 @@ public class FichierService {
             throw new RuntimeException("Erreur lors du stockage du fichier", e);
         }
     }
+
+    //supprimer un fichier
+    public void supprimerFichierParLivrable(Livrable livrable) {
+        Fichier fichier = fichierRepository.findByLivrable(livrable);
+        if (fichier != null) {
+            fichierRepository.delete(fichier);
+        }
+    }
+
+    //récuperé le fichier d'un livrable
+    public Fichier getFichierByDeliverableId(Integer livrableId) {
+        return fichierRepository.findByLivrableId(livrableId)
+                .orElseThrow(() -> new RuntimeException("Fichier non trouvé pour le livrable ID : " + livrableId));
+    }
+
 }

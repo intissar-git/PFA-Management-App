@@ -14,5 +14,4 @@ import java.util.List;
 
 public interface FichierRepository extends JpaRepository<Fichier,Integer> {
     Fichier findByLivrable(Livrable livrable);
-
-}
+    Optional<Fichier> findByLivrableId(Integer livrableId);}

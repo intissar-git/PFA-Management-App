@@ -29,6 +29,11 @@ public class Fichier {
     private String nom;
     @Column(name = "taille", nullable = false)
     private Long taille;
+
+    public String getType() {
+        return type;
+    }
+
     @Column(name = "type", nullable = false)
     private String type;
     @OneToOne
