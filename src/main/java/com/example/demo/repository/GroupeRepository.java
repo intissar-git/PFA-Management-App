@@ -12,9 +12,9 @@ public interface GroupeRepository extends JpaRepository<Groupe, Long> {
 
         // Récupérer tous les Groupes
 
-           /*  default List<Groupe> getAllGroupes() {
+             default List<Groupe> getAllGroupes() {
             return findAll();
-        }*/
+        }
 
            Optional<Groupe> findByIntitule(String nom);
 

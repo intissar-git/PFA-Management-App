@@ -16,6 +16,7 @@ public class EncadrantService {
 
     @Autowired
     private EncadrantRepository encadrantRepository;
+    @Autowired
     private UtilisateurRepository utilisateurRepository;
     //recuperer tout les encadrant
 

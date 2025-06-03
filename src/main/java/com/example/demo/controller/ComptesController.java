@@ -79,39 +79,10 @@ public class ComptesController {
         return ResponseEntity.ok(etudiants);
     }
 
-    // Liste des groupes par filière
-    @GetMapping("/Groupes/{id}")
-    public ResponseEntity<List<Groupe>> getAllGroupeByFiliereId(@PathVariable int id) {
-        List<Groupe> groupes = groupeService.getGroupesByFiliereId(id);
-        if (groupes.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(groupes);
-    }
 
-    // L'intitulé d'un projet d'un groupe sélectionné
-    @GetMapping("ProjetctName/{idGroupe}")
-    public ResponseEntity<String> getProjectNameByIdGroupe(@PathVariable int idGroupe) {
-        String NameProject = groupeService.getProjectTitleByGroupeId(idGroupe);
 
-        if (NameProject == null || NameProject.trim().isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
 
-        return ResponseEntity.ok(NameProject);
-    }
 
-    // Récupérer l'encadrant d'un groupe
-    @GetMapping("EncadrantName/{idGroupe}")
-    public ResponseEntity<String> getEncadrantNameByIdGroupe(@PathVariable int idGroupe) {
-        String EncadrantName = groupeService.getEncadrantNameByGroupeId(idGroupe);
-
-        if (EncadrantName == null || EncadrantName.trim().isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(EncadrantName);
-    }
 
     // Récupérer tous les jurys
     @GetMapping("Jurys")

@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class FichierService {
 
     private final FichierRepository fichierRepository;
-    private final Path cheminDossier = Paths.get("C:\\Users\\Souad\\Desktop\\Fichier_Livrables");
+    private final Path cheminDossier = Paths.get("C:/Users/HP/Desktop/Fichier_Livrables");
 
     public Fichier enregistrerFichier(MultipartFile fichier, Livrable livrable) {
         try {
