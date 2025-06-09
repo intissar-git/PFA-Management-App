@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/soutenances")
-public class SoutenaceController {
+@RequestMapping("/api/soutenance")
+public class SoutenanceController {
 
     @Autowired
     private SoutenanceService soutenanceService;
@@ -22,15 +22,5 @@ public class SoutenaceController {
     @GetMapping
     public List<Soutenance> getAllSoutenances() {
         return soutenanceService.getAllSoutenances();
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteSoutenance(@PathVariable Long id) {
-        soutenanceService.deleteSoutenance(id);
-    }
-
-    @GetMapping("/groupe/{groupeId}")
-    public List<Soutenance> getSoutenancesByGroupe(@PathVariable Long groupeId) {
-        return soutenanceService.getSoutenancesByGroupe(groupeId);
     }
 }

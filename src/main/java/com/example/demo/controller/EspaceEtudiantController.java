@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -70,6 +71,32 @@ public class EspaceEtudiantController {
         }
         return ResponseEntity.ok(tache);
     }
+    //get tache by id
+    @GetMapping("/TachesById/{id}")
+    public ResponseEntity<Tache> getTacheById(@PathVariable int id) {
+        Tache tache = tacheService.getTacheById(id);
+
+        if (tache == null) {
+            return ResponseEntity.notFound().build(); // 404 si la tâche n'existe pas
+        }
+
+        return ResponseEntity.ok(tache); // 200 OK si la tâche est trouvée
+    }
+//mettre ajour le statut d'une tache
+@PutMapping("/updateStatutTache/{id}")
+public ResponseEntity<?> updateStatutTache(@PathVariable int id, @RequestBody Map<String, String> requestBody) {
+    try {
+        String nouveauStatut = requestBody.get("statut"); // récupération du champ "statut"
+        Tache tache = tacheService.getTacheById(id);
+        tache.setStatut(nouveauStatut);
+        tacheService.save(tache);
+        return ResponseEntity.ok("Statut mis à jour");
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erreur : " + e.getMessage());
+    }
+}
+
+
     //supprimer une tache par id
     @DeleteMapping("/DeletTache/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable int id) {
@@ -82,6 +109,7 @@ public class EspaceEtudiantController {
             return ResponseEntity.notFound().build();
         }
     }
+
     //Ajouter une livrable
     /*@PostMapping("/AddLivrable")
     public ResponseEntity<Livrable> addLivrable(@RequestBody Livrable livrable) {

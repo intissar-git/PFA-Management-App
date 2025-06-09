@@ -23,10 +23,19 @@ public class TacheService {
     public List<Tache> getAllTaches(){
         return tacheRepository.getAllTaches();
     }
+    //save
+    public void save(Tache tache) {
+        tacheRepository.save(tache);
+    }
 
     //ajouter une tache
     public Tache AddNewTache(Tache tache){
         return tacheRepository.save(tache);
+    }
+    //get tache by id
+    public Tache getTacheById(int id_tache) {
+        return tacheRepository.findById(id_tache)
+                .orElse(null); // renvoie null si non trouvé
     }
 
     //supprimer par id
