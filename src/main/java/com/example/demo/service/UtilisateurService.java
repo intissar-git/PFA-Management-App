@@ -84,6 +84,7 @@ public class UtilisateurService implements UserDetailsService  {
     public Optional<Utilisateur> findById(Long id) {
         return utilisateurRepository.findById(id);
     }
-
-
+    public Optional<Utilisateur> findByAdresseEmail(String adresseEmail) {
+        return utilisateurRepository.findByAdresseEmail(adresseEmail);
+    }
 }

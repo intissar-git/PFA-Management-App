@@ -17,8 +17,8 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     @Transactional
     @Modifying
-    @Query("UPDATE Notification n SET n.statut = true WHERE n.utilisateur = :utilisateur AND n.statut = false")
-    int markAllAsReadByUser(Utilisateur utilisateur);
+    @Query("UPDATE Notification n SET n.statut = true WHERE n.utilisateur.id = :userId AND n.statut = false")
+    int markAllAsReadByUser(Long userId);
 
     @Transactional
     void deleteByUtilisateurAndStatut(Utilisateur utilisateur, boolean statut);
