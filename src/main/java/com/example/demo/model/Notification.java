@@ -10,29 +10,25 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Notification {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "text_notif", nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String textNotif;
 
-    @Column(name = "date_creation", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
 
-    @Column(name = "statut", nullable = false)
-    private boolean statut; // true=lue, false=non lue
+    private boolean statut; // false = non lue, true = lue
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_utilisateur", nullable = false)
+    @JoinColumn(name = "utilisateur_id")
     private Utilisateur utilisateur;
 
-    // Vous pouvez ajouter des pré-initialisations avec @PrePersist
     @PrePersist
     protected void onCreate() {
         this.dateCreation = new Date();
-        this.statut = false; // Par défaut, la notification est non lue
+        this.statut = false;
     }
 }

@@ -26,6 +26,7 @@ public class ComptesController {
 
     @Autowired
     private EtudiantService etudiantService;
+    @Autowired
     private EtudiantRepository etudiantRepository;
 
     @Autowired
@@ -42,6 +43,7 @@ public class ComptesController {
 
     @Autowired
     private UtilisateurService utilisateurService;
+
 
     // Liste des départements
     @GetMapping("/departements")
@@ -111,5 +113,11 @@ public class ComptesController {
         } else {
             return ResponseEntity.status(404).body("utilisateur non trouvé");
         }
+    }
+    @GetMapping("/utilisateur/{adresseEmail}")  // URL plus explicite
+    public ResponseEntity<?> getUserByMail(@PathVariable String adresseEmail) {
+        Optional<Utilisateur> utilisateur = utilisateurService.findByAdresseEmail(adresseEmail);
+        return utilisateur.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

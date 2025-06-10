@@ -54,7 +54,7 @@ public class DepotRapportController {
         updated.setFiliere(filiereOptional.get());
         updated.setDescription(depot.getDescription());
         updated.setDate(depot.getDate());
-        updated.setNotification(depot.isNotification());
+
 
         return ResponseEntity.ok(depotRapportRepository.save(updated));
     }

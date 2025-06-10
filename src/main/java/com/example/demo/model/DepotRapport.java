@@ -23,8 +23,7 @@ public class DepotRapport {
     @Column(nullable = false)
     private String date;
 
-    @Column(nullable = false)
-    private boolean notification;
+
 
 
 
