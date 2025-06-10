@@ -183,7 +183,7 @@ public class UsersManagementService {
             response.setRole(utilisateur.getRole()); // Renvoyer le rôle de l'utilisateur
             response.setId(utilisateur.getId());
             response.setMessage("Authentification réussie");
-
+            response.setNom(utilisateur.getNom());
         } catch (UsernameNotFoundException e) {
             response.setStatusCode(404); // Not Found
             response.setMessage(e.getMessage());
