@@ -33,6 +33,12 @@ public class Groupe {
     @JoinColumn(name = "filiere_id", nullable = false)
     private Filiere filiere;
 
+
+
+
+    private String statut; // "EN_COURS" ou "TERMINE"
+    private double progres; // Valeur entre 0 et 100
+
 }
 
 
