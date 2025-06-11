@@ -1,40 +1,64 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.DashboardStatsDTO;
+import com.example.demo.model.Groupe;
+import com.example.demo.model.Projet;
 import com.example.demo.repository.GroupeRepository;
-import com.example.demo.repository.ProjectRepository;
+import com.example.demo.repository.TacheRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DashboardService {
 
     private final GroupeRepository groupeRepository;
-    private final ProjectRepository projectRepository;
+    private final TacheRepository tacheRepository;
 
     public DashboardService(GroupeRepository groupeRepository,
-                            ProjectRepository projectRepository) {
+                            TacheRepository tacheRepository) {
         this.groupeRepository = groupeRepository;
-        this.projectRepository = projectRepository;
+        this.tacheRepository = tacheRepository;
     }
 
     public DashboardStatsDTO getDashboardStats(Long encadrantId) {
         DashboardStatsDTO stats = new DashboardStatsDTO();
 
-        // Nombre total de groupes pour cet encadrant
-        stats.setTotalGroupes(groupeRepository.countByEncadrantId(encadrantId));
+        // Récupérer tous les groupes de l'encadrant
+        List<Groupe> groupes = groupeRepository.findByEncadrantId(encadrantId);
+        stats.setTotalGroupes(groupes.size());
 
-        // Nombre total de projets pour cet encadrant
-        stats.setTotalProjets(projectRepository.countByEncadrantId(encadrantId));
+        int projetsEnCours = 0;
+        int projetsTermines = 0;
+        double totalProgres = 0;
+        int groupesAvecProjet = 0;
 
-        // Nombre de projets en cours pour cet encadrant
-        stats.setProjetsEnCours(projectRepository.countProjetsEnCoursByEncadrantId(encadrantId));
+        for (Groupe groupe : groupes) {
+            Projet projet = groupe.getProjet();
+            if (projet != null) {
+                groupesAvecProjet++;
 
-        // Nombre de projets terminés pour cet encadrant
-        stats.setProjetsTermines(projectRepository.countProjetsTerminesByEncadrantId(encadrantId));
+                // Compter les tâches du projet
+                long totalTaches = tacheRepository.countByProjetId(projet.getId());
+                long tachesTerminees = tacheRepository.countByProjetIdAndStatut(projet.getId(), "terminé");
 
-        // Calcul du progrès moyen des groupes de cet encadrant
-        Double progresMoyen = groupeRepository.calculateProgresMoyenByEncadrantId(encadrantId);
-        stats.setProgresMoyen(progresMoyen != null ? progresMoyen : 0.0);
+                // Calculer le progrès
+                double progres = (totalTaches > 0) ? ((double) tachesTerminees / totalTaches) * 100 : 0;
+                totalProgres += progres;
+
+                // Déterminer le statut du projet
+                if (totalTaches > 0 && totalTaches == tachesTerminees) {
+                    projetsTermines++;
+                } else {
+                    projetsEnCours++;
+                }
+            }
+        }
+
+        stats.setTotalProjets(groupesAvecProjet);
+        stats.setProjetsEnCours(projetsEnCours);
+        stats.setProjetsTermines(projetsTermines);
+        stats.setProgresMoyen(groupesAvecProjet > 0 ? totalProgres / groupesAvecProjet : 0);
 
         return stats;
     }

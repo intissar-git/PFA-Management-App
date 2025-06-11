@@ -38,15 +38,10 @@ public interface GroupeRepository extends JpaRepository<Groupe, Long> {
 
     //List<Groupe> getAllGroupes();
 
-    // Compter les groupes par ID encadrant
-    @Query("SELECT COUNT(g) FROM Groupe g WHERE g.encadrant.id = :encadrantId")
-    int countByEncadrantId(@Param("encadrantId") Long encadrantId);
-
-    // Calculer le progrès moyen
-    @Query("SELECT AVG(g.progres) FROM Groupe g WHERE g.encadrant.id = :encadrantId")
-    Double calculateProgresMoyenByEncadrantId(@Param("encadrantId") Long encadrantId);
-
     // Récupérer les groupes d'un encadrant
     List<Groupe> findByEncadrantId(Long encadrantId);
+
+
+
 }
 
