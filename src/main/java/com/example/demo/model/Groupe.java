@@ -1,4 +1,5 @@
 package com.example.demo.model;
+
 import lombok.*;
 import jakarta.persistence.*;
 
@@ -9,7 +10,6 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Groupe {
-
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +32,4 @@ public class Groupe {
     @ManyToOne
     @JoinColumn(name = "filiere_id", nullable = false)
     private Filiere filiere;
-
-
-
-
-    private String statut; // "EN_COURS" ou "TERMINE"
-    private double progres; // Valeur entre 0 et 100
-
 }
-
-
-
