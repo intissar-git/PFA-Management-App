@@ -16,7 +16,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:8081", "http://localhost:8082","http://localhost:8083") // Port du frontend (Live Server)
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH")
                         .allowedHeaders("Authorization", "Content-Type")
                         .exposedHeaders("Authorization") // Exposer le header JWT
                         .allowCredentials(true)

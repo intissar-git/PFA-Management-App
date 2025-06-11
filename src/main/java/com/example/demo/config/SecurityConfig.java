@@ -34,6 +34,11 @@ public class SecurityConfig {
     private  JWTAuthFilter jwtAuthFilter;
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
@@ -61,11 +66,7 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
 
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

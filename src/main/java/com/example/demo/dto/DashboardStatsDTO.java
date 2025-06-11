@@ -5,8 +5,9 @@ import lombok.Data;
 @Data
 public class DashboardStatsDTO {
     private int totalGroupes;
-    private long totalProjets;
-    private long projetsEnCours;
-    private long projetsTermines;
+    private int totalProjets;
+    private int projetsEnCours;
+    private int projetsTermines;
+    private int projetsEnRetard;
     private double progresMoyen;
 }

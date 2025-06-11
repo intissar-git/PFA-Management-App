@@ -3,6 +3,8 @@ package com.example.demo.model;
 import lombok.*;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Data
 @Getter
@@ -32,4 +34,22 @@ public class Groupe {
     @ManyToOne
     @JoinColumn(name = "filiere_id", nullable = false)
     private Filiere filiere;
+
+
+    // Ajoutez cette relation
+    @OneToMany(mappedBy = "groupe", cascade = CascadeType.ALL)
+    private List<Etudiant> etudiants;
+
+    // Getters et Setters
+    public Integer getId() {
+        return id;
+    }
+
+    public List<Etudiant> getEtudiants() {
+        return etudiants;
+    }
+
+    public void setEtudiants(List<Etudiant> etudiants) {
+        this.etudiants = etudiants;
+    }
 }
