@@ -1,4 +1,5 @@
 package com.example.demo.repository;
+import com.example.demo.model.Etudiant;
 import com.example.demo.model.Groupe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -48,5 +49,6 @@ public interface GroupeRepository extends JpaRepository<Groupe, Long> {
 
     // Récupérer les groupes d'un encadrant
     List<Groupe> findByEncadrantId(Long encadrantId);
+
 }
 

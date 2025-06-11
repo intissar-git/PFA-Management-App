@@ -1,16 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Encadrant;
-import com.example.demo.model.Filiere;
+import com.example.demo.model.*;
 import com.example.demo.repository.EncadrantRepository;
 import com.example.demo.repository.FiliereRepository;
 import com.example.demo.repository.ProjectRepository;
 
 import org.springframework.transaction.annotation.Transactional;
-import com.example.demo.model.Groupe;
-import com.example.demo.model.Projet;
 import com.example.demo.service.EtudiantService;
-import com.example.demo.model.CreateGroupWithProjectRequest;
 import com.example.demo.service.FiliereService;
 import com.example.demo.service.GroupeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +114,17 @@ public class GroupeController {
     @PostMapping
     public  Groupe AddGroupe(Groupe groupe){
         return groupeService.AddGroupe(groupe);
+    }
+
+    //liste des etudiants par groupe id
+    // Liste des groupes par filière
+    @GetMapping("/EtudiantByGroupe/{id}")
+    public ResponseEntity<List<Etudiant>> getAllEtudiantByGroupeId(@PathVariable int id) {
+        List<Etudiant> etudiants = etudiantService.getEtudiantByGroupeId(id);
+        if (etudiants.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(etudiants);
     }
 
 }

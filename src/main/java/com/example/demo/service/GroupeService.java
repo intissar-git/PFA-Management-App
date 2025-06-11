@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Etudiant;
 import com.example.demo.model.Groupe;
 import com.example.demo.repository.GroupeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +37,5 @@ public class GroupeService {
     public String getEncadrantNameByGroupeId(int idGroupe) {
         return groupeRepository.findEncadrantByGroupeId(idGroupe);
     }
+
 }

@@ -32,7 +32,12 @@ public class EtudiantService {
     public List<Etudiant> getAllEtudiantsByFiliere(int filiere_id){
         return etudiantRepository.getAllEtudiantsByFiliereId(filiere_id);
     }
+    //recuperé le titre de projet d'un groupe
+    public List<Etudiant> getEtudiantByGroupeId(int idGroupe) {
+        return etudiantRepository.findByGroupeId(idGroupe);
+    }
     //
+
     public Optional<Etudiant> findById(Long id) {
         return etudiantRepository.findById(id);
     }

@@ -13,6 +13,6 @@ import java.util.List;
 public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
     //recuperé les etudiants d'une filiere
     List<Etudiant> getAllEtudiantsByFiliereId(int Filier_Id);
-
+    List<Etudiant> findByGroupeId(int groupeId);
 
 }
