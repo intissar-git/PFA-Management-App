@@ -276,14 +276,7 @@ Nous tenons à remercier notre encadrant, Monsieur Mohammed OUTANOUT, pour sa di
 
 Nous remercions également nos professeurs, nos familles et nos amis pour leur soutien précieux.
 
----
 
-## 📄 Licence
-
-Ce projet est distribué sous licence open source.  
-Veuillez consulter le fichier `LICENSE` pour plus d'informations.
-
----
 
 ## 🧩 Améliorations possibles
 
