@@ -97,7 +97,6 @@ PFA-Management-App/
 ├── backend/                          # API Spring Boot
 │   ├── src/
 │   ├── pom.xml
-│   └── README.md
 ├── frontend/                         # Application React + TypeScript
 │   ├── src/
 │   ├── public/
@@ -105,8 +104,6 @@ PFA-Management-App/
 │   └── vite.config.ts
 ├── docs/                             # Documentation
 │   ├── RAPPORT_PFE.pdf
-│   ├── diagrams/
-│   └── screenshots/
 ├── README.md
 ```
 
