@@ -26,8 +26,6 @@ Elle permet aux étudiants, encadrants et administrateurs de collaborer, de dép
 - [Documentation](#-documentation)
 - [Équipe](#-équipe)
 - [Remerciements](#-remerciements)
-- [Licence](#-licence)
-
 ---
 
 ## 🎯 Présentation
@@ -221,7 +219,7 @@ http://localhost:3000   # CRA
 
 ## 📚 Documentation
 
-- Rapport de projet : `docs/RAPPORT_PFE.pdf
+📄 **[Rapport de Stage](https://github.com/intissar-git/PFA-Management-App/tree/main/Docs)** — Documentation complète du projet
 
 ---
 
