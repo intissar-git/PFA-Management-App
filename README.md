@@ -88,26 +88,6 @@ Le système est conçu pour être simple, sécurisé et adapté aux besoins d'un
 | **API** | REST API sécurisée |
 | **Outils** | Git, GitHub, Postman, UML |
 
----
-
-## 📁 Structure du projet
-
-```text
-PFA-Management-App/
-├── backend/                          # API Spring Boot
-│   ├── src/
-│   ├── pom.xml
-├── frontend/                         # Application React + TypeScript
-│   ├── src/
-│   ├── public/
-│   ├── package.json
-│   └── vite.config.ts
-├── docs/                             # Documentation
-│   ├── RAPPORT_PFE.pdf
-├── README.md
-```
-
----
 
 ## ⚙️ Prérequis
 
