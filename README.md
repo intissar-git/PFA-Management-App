@@ -108,9 +108,6 @@ PFA-Management-App/
 │   ├── diagrams/
 │   └── screenshots/
 ├── README.md
-├── .gitignore
-├── LICENSE
-└── .env.example
 ```
 
 ---
@@ -247,9 +244,7 @@ http://localhost:3000   # CRA
 
 ## 📚 Documentation
 
-- Rapport de projet : `docs/RAPPORT_PFE.pdf`
-- Diagrammes UML : `docs/diagrams/`
-- Captures d'écran : `docs/screenshots/`
+- Rapport de projet : `docs/RAPPORT_PFE.pdf
 
 ---
 
